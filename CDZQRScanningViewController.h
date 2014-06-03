@@ -42,6 +42,8 @@ typedef NS_ENUM(NSInteger, CDZQRScanningViewControllerErrorCode) {
  */
 - (instancetype)init;
 
+- (void)reset;
+
 // Your blocks will be called on the main queue.
 @property (nonatomic, copy) CDZQRScanResultBlock resultBlock;
 @property (nonatomic, copy) CDZQRScanErrorBlock errorBlock;
