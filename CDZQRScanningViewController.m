@@ -100,56 +100,52 @@ NSString * const CDZQRScanningErrorDomain = @"com.cdzombak.qrscanningviewcontrol
 
     self.avSession = [[AVCaptureSession alloc] init];
 
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-        self.captureDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
-        if ([self.captureDevice isLowLightBoostSupported] && [self.captureDevice lockForConfiguration:nil]) {
-            self.captureDevice.automaticallyEnablesLowLightBoostWhenAvailable = YES;
-            [self.captureDevice unlockForConfiguration];
+    self.captureDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+    if ([self.captureDevice isLowLightBoostSupported] && [self.captureDevice lockForConfiguration:nil]) {
+        self.captureDevice.automaticallyEnablesLowLightBoostWhenAvailable = YES;
+        [self.captureDevice unlockForConfiguration];
+    }
+    
+    [self.avSession beginConfiguration];
+    
+    NSError *error = nil;
+    AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice:self.captureDevice error:&error];
+    if (input) {
+        [self.avSession addInput:input];
+    } else {
+        NSLog(@"QRScanningViewController: Error getting input device: %@", error);
+        [self.avSession commitConfiguration];
+        if (self.errorBlock) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.errorBlock(error);
+            });
         }
-
-        [self.avSession beginConfiguration];
-
-        NSError *error = nil;
-        AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice:self.captureDevice error:&error];
-        if (input) {
-            [self.avSession addInput:input];
-        } else {
-            NSLog(@"QRScanningViewController: Error getting input device: %@", error);
-            [self.avSession commitConfiguration];
+        return;
+    }
+    
+    AVCaptureMetadataOutput *output = [[AVCaptureMetadataOutput alloc] init];
+    [self.avSession addOutput:output];
+    for (NSString *type in self.metadataObjectTypes) {
+        if (![output.availableMetadataObjectTypes containsObject:type]) {
             if (self.errorBlock) {
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    self.errorBlock(error);
+                    self.errorBlock([NSError errorWithDomain:CDZQRScanningErrorDomain code:CDZQRScanningViewControllerErrorUnavailableMetadataObjectType userInfo:@{NSLocalizedDescriptionKey:[NSString stringWithFormat:@"Unable to scan object of type %@", type]}]);
                 });
             }
             return;
         }
-
-        AVCaptureMetadataOutput *output = [[AVCaptureMetadataOutput alloc] init];
-        [self.avSession addOutput:output];
-        for (NSString *type in self.metadataObjectTypes) {
-            if (![output.availableMetadataObjectTypes containsObject:type]) {
-                if (self.errorBlock) {
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        self.errorBlock([NSError errorWithDomain:CDZQRScanningErrorDomain code:CDZQRScanningViewControllerErrorUnavailableMetadataObjectType userInfo:@{NSLocalizedDescriptionKey:[NSString stringWithFormat:@"Unable to scan object of type %@", type]}]);
-                    });
-                }
-                return;
-            }
-        }
-
-        output.metadataObjectTypes = self.metadataObjectTypes;
-        [output setMetadataObjectsDelegate:self queue:dispatch_get_main_queue()];
-
-        [self.avSession commitConfiguration];
-
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if (self.previewLayer.connection.isVideoOrientationSupported) {
-                self.previewLayer.connection.videoOrientation = CDZVideoOrientationFromInterfaceOrientation(self.interfaceOrientation);
-            }
-
-            [self.avSession startRunning];
-        });
-    });
+    }
+    
+    output.metadataObjectTypes = self.metadataObjectTypes;
+    [output setMetadataObjectsDelegate:self queue:dispatch_get_main_queue()];
+    
+    [self.avSession commitConfiguration];
+    
+    if (self.previewLayer.connection.isVideoOrientationSupported) {
+        self.previewLayer.connection.videoOrientation = CDZVideoOrientationFromInterfaceOrientation(self.interfaceOrientation);
+    }
+    
+    [self.avSession startRunning];
 
     self.previewLayer = [AVCaptureVideoPreviewLayer layerWithSession:self.avSession];
     self.previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
