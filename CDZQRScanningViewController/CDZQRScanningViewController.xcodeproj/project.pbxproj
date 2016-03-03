@@ -13,8 +13,8 @@
 		DC54EDC71C887F7F004E448C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC54EDC61C887F7F004E448C /* Assets.xcassets */; };
 		DC54EDCA1C887F7F004E448C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DC54EDC81C887F7F004E448C /* LaunchScreen.storyboard */; };
 		DC54EDD41C888356004E448C /* CDZQRScanningViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC54EDD31C888356004E448C /* CDZQRScanningViewController.m */; };
-		DC54EDD61C888367004E448C /* Internal_CDZQRScanningViewController.podspec in Resources */ = {isa = PBXBuildFile; fileRef = DC54EDD51C888367004E448C /* Internal_CDZQRScanningViewController.podspec */; };
 		DC54EDD91C8883B0004E448C /* CDZDiscoveredBarCodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC54EDD81C8883B0004E448C /* CDZDiscoveredBarCodeView.m */; };
+		DC54EDDB1C889797004E448C /* Internal_CDZQRScanningViewController.podspec in Resources */ = {isa = PBXBuildFile; fileRef = DC54EDDA1C889796004E448C /* Internal_CDZQRScanningViewController.podspec */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,9 +28,9 @@
 		DC54EDCB1C887F7F004E448C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DC54EDD21C888356004E448C /* CDZQRScanningViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDZQRScanningViewController.h; sourceTree = "<group>"; };
 		DC54EDD31C888356004E448C /* CDZQRScanningViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDZQRScanningViewController.m; sourceTree = "<group>"; };
-		DC54EDD51C888367004E448C /* Internal_CDZQRScanningViewController.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Internal_CDZQRScanningViewController.podspec; sourceTree = "<group>"; };
 		DC54EDD71C8883B0004E448C /* CDZDiscoveredBarCodeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDZDiscoveredBarCodeView.h; sourceTree = "<group>"; };
 		DC54EDD81C8883B0004E448C /* CDZDiscoveredBarCodeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDZDiscoveredBarCodeView.m; sourceTree = "<group>"; };
+		DC54EDDA1C889796004E448C /* Internal_CDZQRScanningViewController.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Internal_CDZQRScanningViewController.podspec; path = ../Internal_CDZQRScanningViewController.podspec; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,7 +47,7 @@
 		DC54EDAE1C887F7F004E448C = {
 			isa = PBXGroup;
 			children = (
-				DC54EDD51C888367004E448C /* Internal_CDZQRScanningViewController.podspec */,
+				DC54EDDA1C889796004E448C /* Internal_CDZQRScanningViewController.podspec */,
 				DC54EDD11C888347004E448C /* Source */,
 				DC54EDB91C887F7F004E448C /* CDZQRScanningViewController */,
 				DC54EDB81C887F7F004E448C /* Products */,
@@ -153,7 +153,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DC54EDD61C888367004E448C /* Internal_CDZQRScanningViewController.podspec in Resources */,
+				DC54EDDB1C889797004E448C /* Internal_CDZQRScanningViewController.podspec in Resources */,
 				DC54EDCA1C887F7F004E448C /* LaunchScreen.storyboard in Resources */,
 				DC54EDC71C887F7F004E448C /* Assets.xcassets in Resources */,
 				DC54EDC51C887F7F004E448C /* Main.storyboard in Resources */,
