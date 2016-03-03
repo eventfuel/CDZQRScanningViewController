@@ -9,8 +9,8 @@ Pod::Spec.new do |s|
   s.source       = { :git => 'https://github.com/tasboa/CDZQRScanningViewController.git', :tag => "#{s.version}" }
   s.platform     = :ios, '7.0'
 
-  s.source_files = '*.{h,m}'
-  s.public_header_files = 'CDZQRScanningViewController.h'
+  s.source_files = 'Source/*.{h,m}'
+  s.public_header_files = 'Source/*.h'
   s.frameworks   = ['AVFoundation', 'UIKit']
   s.requires_arc = true
 end
