@@ -6,7 +6,7 @@ Pod::Spec.new do |s|
   s.license      = 'MIT'
   s.author       = { 'Chris Dzombak' => 'chris@chrisdzombak.net' }
 
-  s.source       = { :git => 'https://github.com/tasboa/CDZQRScanningViewController.git', :tag => '#{s.version}' }
+  s.source       = { :git => 'https://github.com/tasboa/CDZQRScanningViewController.git', :tag => "#{s.version}" }
   s.platform     = :ios, '7.0'
 
   s.source_files = '*.{h,m}'
