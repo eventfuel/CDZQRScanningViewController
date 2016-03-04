@@ -271,19 +271,6 @@ NSString * const CDZQRScanningErrorDomain = @"com.cdzombak.qrscanningviewcontrol
 
 #pragma mark - AVCaptureMetadataOutputObjectsDelegate
 
-//func translatePoints(points : [AnyObject], fromView : UIView, toView: UIView) -&gt; [CGPoint] {
-//    var translatedPoints : [CGPoint] = []
-//    for point in points {
-//        var dict = point as NSDictionary
-//        let x = CGFloat((dict.objectForKey("X") as NSNumber).floatValue)
-//        let y = CGFloat((dict.objectForKey("Y") as NSNumber).floatValue)
-//        let curr = CGPointMake(x, y)
-//        let currFinal = fromView.convertPoint(curr, toView: toView)
-//        translatedPoints.append(currFinal)
-//    }
-//    return translatedPoints
-//}
-
 - (NSArray<NSValue *> *)translatePoints:(NSArray *)points fromView:(UIView *)sourceView toView:(UIView *)targetView {
     NSMutableArray<NSValue *> *translatedPoints = [NSMutableArray arrayWithCapacity:points.count];
     
@@ -329,7 +316,14 @@ NSString * const CDZQRScanningErrorDomain = @"com.cdzombak.qrscanningviewcontrol
 
     if (result && ![self.lastCapturedString isEqualToString:result]) {
         self.lastCapturedString = result;
-        if (self.resultBlock) self.resultBlock(result);
+        
+        if(self.reportingDelay > 0.0) {
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(self.reportingDelay * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                !self.resultBlock ?: self.resultBlock(result);
+            });
+        } else {
+            !self.resultBlock ?: self.resultBlock(result);
+        }
     }
 }
 

@@ -50,6 +50,11 @@ typedef NS_ENUM(NSInteger, CDZQRScanningViewControllerErrorCode) {
 @property (nonatomic, copy) CDZQRScanCancelBlock cancelBlock;
 
 /**
+ *  @abstract Set this if you want to add a delay between a code being scanned and the \c resultBlock from being called
+ */
+@property (nonatomic) NSTimeInterval reportingDelay;
+
+/**
  *  An array of `AVMetadataMachineReadableCodeObject`s
  */
 @property (nonatomic, strong, readonly) NSArray *metadataObjectTypes;
